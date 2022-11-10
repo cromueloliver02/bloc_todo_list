@@ -84,6 +84,7 @@ class _TDLTodoModalState extends State<TDLTodoModal> {
                       TDLButton(
                         label: 'Save',
                         type: ButtonType.elevated,
+                        labelColor: Colors.white,
                         onPressed: _save,
                       ),
                     ],

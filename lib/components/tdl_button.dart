@@ -26,13 +26,14 @@ class TDLButton extends StatelessWidget {
         child: Row(
           mainAxisSize: MainAxisSize.min,
           children: [
-            if (iconData != null)
+            if (iconData != null) ...[
               Icon(
                 iconData,
                 size: 30,
                 color: theme.primaryColorLight,
               ),
-            const SizedBox(width: 10),
+              const SizedBox(width: 10),
+            ],
             Text(
               label,
               style: theme.textTheme.headline6!.copyWith(
@@ -49,13 +50,14 @@ class TDLButton extends StatelessWidget {
       child: Row(
         mainAxisSize: MainAxisSize.min,
         children: [
-          if (iconData != null)
+          if (iconData != null) ...[
             Icon(
               iconData,
               size: 30,
               color: theme.colorScheme.primary,
             ),
-          const SizedBox(width: 10),
+            const SizedBox(width: 10),
+          ],
           Text(
             label,
             style: theme.textTheme.headline6!.copyWith(
