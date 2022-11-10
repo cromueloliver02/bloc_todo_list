@@ -11,8 +11,12 @@ part 'todo_list_state.dart';
 
 class TodoListBloc extends Bloc<TodoListEvent, TodoListState> {
   TodoListBloc() : super(TodoListState.initial()) {
-    on<TodoListEvent>((event, emit) {
-      // TODO: implement event handler
-    });
+    on<AddTodoEvent>(_addTodo);
+  }
+
+  void _addTodo(AddTodoEvent event, Emitter<TodoListState> emit) {
+    final todos = [event.todo, ...state.todos];
+
+    emit(state.copyWith(todos: todos));
   }
 }

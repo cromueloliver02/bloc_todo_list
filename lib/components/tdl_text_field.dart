@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 class TDLTextField extends StatelessWidget {
   const TDLTextField({
     super.key,
+    required this.controller,
     required this.label,
     this.prefixIcon,
     this.maxLines = 1,
@@ -10,6 +11,7 @@ class TDLTextField extends StatelessWidget {
     this.filled = false,
   });
 
+  final TextEditingController controller;
   final String label;
   final IconData? prefixIcon;
   final int? maxLines;
@@ -19,6 +21,7 @@ class TDLTextField extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return TextField(
+      controller: controller,
       autofocus: autofocus,
       maxLines: maxLines,
       decoration: InputDecoration(

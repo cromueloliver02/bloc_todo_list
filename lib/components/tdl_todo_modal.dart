@@ -1,8 +1,34 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:uuid/uuid.dart';
+import '../blocs/blocs.dart';
+import '../models/models.dart';
 import 'components.dart';
 
-class TDLTodoModal extends StatelessWidget {
+class TDLTodoModal extends StatefulWidget {
   const TDLTodoModal({super.key});
+
+  @override
+  State<TDLTodoModal> createState() => _TDLTodoModalState();
+}
+
+class _TDLTodoModalState extends State<TDLTodoModal> {
+  late final TextEditingController _titleController;
+  late final TextEditingController _descController;
+
+  void _save() {
+    if (_titleController.text.isEmpty || _descController.text.isEmpty) return;
+
+    const uuid = Uuid();
+    final todo = Todo(
+      id: uuid.v4(),
+      title: _titleController.text,
+      description: _descController.text,
+    );
+
+    context.read<TodoListBloc>().add(AddTodoEvent(todo: todo));
+    Navigator.pop(context);
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -17,14 +43,16 @@ class TDLTodoModal extends StatelessWidget {
               padding: const EdgeInsets.all(20),
               child: Column(
                 children: [
-                  const TDLTextField(
+                  TDLTextField(
+                    controller: _titleController,
                     label: 'Title',
                     prefixIcon: Icons.create,
                     autofocus: true,
                     filled: true,
                   ),
                   const SizedBox(height: 10),
-                  const TDLTextField(
+                  TDLTextField(
+                    controller: _descController,
                     label: 'Description',
                     prefixIcon: Icons.note_add,
                     maxLines: 5,
@@ -42,7 +70,7 @@ class TDLTodoModal extends StatelessWidget {
                       TDLButton(
                         label: 'Save',
                         type: ButtonType.elevated,
-                        onPressed: () {},
+                        onPressed: _save,
                       ),
                     ],
                   ),
@@ -53,5 +81,19 @@ class TDLTodoModal extends StatelessWidget {
         ),
       ],
     );
+  }
+
+  @override
+  void initState() {
+    super.initState();
+    _titleController = TextEditingController();
+    _descController = TextEditingController();
+  }
+
+  @override
+  void dispose() {
+    _titleController.dispose();
+    _descController.dispose();
+    super.dispose();
   }
 }
