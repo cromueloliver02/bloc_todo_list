@@ -1,10 +1,9 @@
 import 'package:flutter/material.dart';
 import '../components/components.dart';
+import '../models/todo.dart';
 
-void showTodoModal(BuildContext ctx) => showModalBottomSheet(
+void showTodoModal(BuildContext ctx, [Todo? todo]) => showModalBottomSheet(
       context: ctx,
       isScrollControlled: true,
-      builder: (ctx) {
-        return const TDLTodoModal();
-      },
+      builder: (ctx) => TDLTodoModal(todo: todo),
     );

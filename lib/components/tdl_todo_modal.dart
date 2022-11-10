@@ -6,7 +6,12 @@ import '../models/models.dart';
 import 'components.dart';
 
 class TDLTodoModal extends StatefulWidget {
-  const TDLTodoModal({super.key});
+  final Todo? todo;
+
+  const TDLTodoModal({
+    super.key,
+    this.todo,
+  });
 
   @override
   State<TDLTodoModal> createState() => _TDLTodoModalState();
@@ -17,16 +22,26 @@ class _TDLTodoModalState extends State<TDLTodoModal> {
   late final TextEditingController _descController;
 
   void _save() {
-    if (_titleController.text.isEmpty || _descController.text.isEmpty) return;
+    final title = _titleController.text;
+    final desc = _descController.text;
 
-    const uuid = Uuid();
-    final todo = Todo(
-      id: uuid.v4(),
-      title: _titleController.text,
-      description: _descController.text,
-    );
+    if (title.isEmpty || desc.isEmpty) return;
 
-    context.read<TodoListBloc>().add(AddTodoEvent(todo: todo));
+    final todoListBloc = context.read<TodoListBloc>();
+
+    if (widget.todo == null) {
+      todoListBloc.add(AddTodoEvent(
+        title: title,
+        desc: desc,
+      ));
+    } else {
+      todoListBloc.add(EditTodoEvent(
+        id: widget.todo!.id,
+        title: title,
+        desc: desc,
+      ));
+    }
+
     Navigator.pop(context);
   }
 
@@ -47,7 +62,7 @@ class _TDLTodoModalState extends State<TDLTodoModal> {
                     controller: _titleController,
                     label: 'Title',
                     prefixIcon: Icons.create,
-                    autofocus: true,
+                    autofocus: widget.todo == null,
                     filled: true,
                   ),
                   const SizedBox(height: 10),
@@ -86,8 +101,8 @@ class _TDLTodoModalState extends State<TDLTodoModal> {
   @override
   void initState() {
     super.initState();
-    _titleController = TextEditingController();
-    _descController = TextEditingController();
+    _titleController = TextEditingController(text: widget.todo?.title);
+    _descController = TextEditingController(text: widget.todo?.description);
   }
 
   @override

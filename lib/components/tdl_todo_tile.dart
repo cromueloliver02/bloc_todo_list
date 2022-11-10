@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:tuple/tuple.dart';
 import '../models/todo.dart';
+import '../utils/functions.dart';
 import '../utils/constants.dart';
 
 class TDLTodoTile extends StatelessWidget {
@@ -10,9 +12,29 @@ class TDLTodoTile extends StatelessWidget {
 
   final Todo todo;
 
+  void _onSelected(BuildContext ctx, PopButtonType type) {
+    switch (type) {
+      case PopButtonType.edit:
+        showTodoModal(ctx, todo);
+        break;
+      case PopButtonType.delete:
+        (() {})(); // delete function
+        break;
+      case PopButtonType.archive:
+        (() {})(); // archive function
+        break;
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
     final theme = Theme.of(context);
+
+    const popupButtons = [
+      Tuple3('Edit', Icons.edit, PopButtonType.edit),
+      Tuple3('Delete', Icons.delete, PopButtonType.delete),
+      Tuple3('Archive', Icons.archive, PopButtonType.archive),
+    ];
 
     return Container(
       margin: const EdgeInsets.symmetric(vertical: 5),
@@ -29,47 +51,27 @@ class TDLTodoTile extends StatelessWidget {
             fontWeight: FontWeight.normal,
           ),
         ),
-        trailing: PopupMenuButton(
-          itemBuilder: (ctx) => [
-            PopupMenuItem(
-              child: Row(
-                children: [
-                  Icon(
-                    Icons.edit,
-                    color: theme.iconTheme.color,
-                  ),
-                  const SizedBox(width: 8),
-                  const Text('Edit'),
-                ],
-              ),
-            ),
-            PopupMenuItem(
-              child: Row(
-                children: [
-                  Icon(
-                    Icons.delete,
-                    color: theme.iconTheme.color,
-                  ),
-                  const SizedBox(width: 8),
-                  const Text('Delete'),
-                ],
-              ),
-            ),
-            PopupMenuItem(
-              child: Row(
-                children: [
-                  Icon(
-                    Icons.archive,
-                    color: theme.iconTheme.color,
-                  ),
-                  const SizedBox(width: 8),
-                  const Text('Archive'),
-                ],
-              ),
-            ),
-          ],
+        trailing: PopupMenuButton<PopButtonType>(
+          onSelected: (type) => _onSelected(context, type),
+          itemBuilder: (ctx) => popupButtons
+              .map((d) => PopupMenuItem(
+                    value: d.item3,
+                    child: Row(
+                      children: [
+                        Icon(
+                          d.item2,
+                          color: theme.iconTheme.color,
+                        ),
+                        const SizedBox(width: 8),
+                        Text(d.item1),
+                      ],
+                    ),
+                  ))
+              .toList(),
         ),
       ),
     );
   }
 }
+
+enum PopButtonType { edit, delete, archive }
