@@ -6,10 +6,12 @@ class TDLButton extends StatelessWidget {
     required this.label,
     required this.type,
     required this.onPressed,
+    this.iconData,
     this.labelColor,
   });
 
   final String label;
+  final IconData? iconData;
   final ButtonType type;
   final VoidCallback onPressed;
   final Color? labelColor;
@@ -21,22 +23,46 @@ class TDLButton extends StatelessWidget {
     if (type == ButtonType.text) {
       return TextButton(
         onPressed: onPressed,
-        child: Text(
-          label,
-          style: theme.textTheme.headline6!.copyWith(
-            color: labelColor ?? theme.textTheme.headline6!.color,
-          ),
+        child: Row(
+          mainAxisSize: MainAxisSize.min,
+          children: [
+            if (iconData != null)
+              Icon(
+                iconData,
+                size: 30,
+                color: theme.primaryColorLight,
+              ),
+            const SizedBox(width: 10),
+            Text(
+              label,
+              style: theme.textTheme.headline6!.copyWith(
+                color: labelColor ?? theme.textTheme.headline6!.color,
+              ),
+            ),
+          ],
         ),
       );
     }
 
     return ElevatedButton(
       onPressed: onPressed,
-      child: Text(
-        label,
-        style: theme.textTheme.headline6!.copyWith(
-          color: Colors.white,
-        ),
+      child: Row(
+        mainAxisSize: MainAxisSize.min,
+        children: [
+          if (iconData != null)
+            Icon(
+              iconData,
+              size: 30,
+              color: theme.colorScheme.primary,
+            ),
+          const SizedBox(width: 10),
+          Text(
+            label,
+            style: theme.textTheme.headline6!.copyWith(
+              color: labelColor ?? theme.textTheme.headline6!.color,
+            ),
+          ),
+        ],
       ),
     );
   }

@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import '../components/components.dart';
 import '../utils/constants.dart';
 
 class TDLDrawer extends StatelessWidget {
@@ -9,111 +10,121 @@ class TDLDrawer extends StatelessWidget {
     final theme = Theme.of(context);
 
     return Drawer(
-      child: Column(
-        children: [
-          Stack(
-            children: [
-              Image.asset(
-                'assets/images/cover.jpeg',
-                height: 220,
-                fit: BoxFit.cover,
-              ),
-              Positioned(
-                left: 0,
-                top: 0,
-                right: 0,
-                bottom: 0,
-                child: Container(
-                  decoration: const BoxDecoration(
-                    gradient: LinearGradient(
-                      begin: Alignment.bottomCenter,
-                      end: Alignment.topCenter,
-                      colors: [
-                        Colors.black38,
-                        Colors.transparent,
-                      ],
-                    ),
-                  ),
-                ),
-              ),
-              Positioned(
-                bottom: 10,
-                left: 10,
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    CircleAvatar(
-                      backgroundColor: theme.colorScheme.primary,
-                      radius: 30,
-                      child: const CircleAvatar(
-                        backgroundImage: AssetImage(
-                          'assets/images/profile.jpeg',
-                        ),
-                        radius: 27,
-                      ),
-                    ),
-                    const SizedBox(height: 5),
-                    SizedBox(
-                      width: 285,
-                      child: Text(
-                        'Cromuel D. Barut',
-                        overflow: TextOverflow.ellipsis,
-                        style: theme.textTheme.headline5!.copyWith(
-                          color: Colors.white,
-                        ),
-                      ),
-                    ),
-                  ],
-                ),
-              ),
-            ],
-          ),
-          const SizedBox(height: 20),
-          ListTile(
-            leading: const Icon(
-              Icons.home,
-              size: 30,
-            ),
-            title: Text(
-              'Home',
-              style: theme.textTheme.bodyText1!.copyWith(
-                fontSize: kRegularFontSize,
-              ),
-            ),
-            onTap: () {},
-          ),
-          ListTile(
-            leading: const Icon(
-              Icons.archive,
-              size: 30,
-            ),
-            title: Text(
-              'Archive',
-              style: theme.textTheme.bodyText1!.copyWith(
-                fontSize: kRegularFontSize,
-              ),
-            ),
-            onTap: () {},
-          ),
-          const SizedBox(height: 20),
-          Padding(
-            padding: const EdgeInsets.symmetric(horizontal: 20),
-            child: Row(
+      child: SafeArea(
+        top: false,
+        child: Column(
+          children: [
+            Stack(
               children: [
-                Text(
-                  'Dark mode:',
-                  style: theme.textTheme.bodyText1!.copyWith(
-                    fontSize: kRegularFontSize,
+                Image.asset(
+                  'assets/images/cover.jpeg',
+                  height: 220,
+                  fit: BoxFit.cover,
+                ),
+                Positioned(
+                  left: 0,
+                  top: 0,
+                  right: 0,
+                  bottom: 0,
+                  child: Container(
+                    decoration: const BoxDecoration(
+                      gradient: LinearGradient(
+                        begin: Alignment.bottomCenter,
+                        end: Alignment.topCenter,
+                        colors: [
+                          Colors.black38,
+                          Colors.transparent,
+                        ],
+                      ),
+                    ),
                   ),
                 ),
-                Switch(
-                  value: false,
-                  onChanged: (value) {},
+                Positioned(
+                  bottom: 10,
+                  left: 10,
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      CircleAvatar(
+                        backgroundColor: theme.colorScheme.primary,
+                        radius: 30,
+                        child: const CircleAvatar(
+                          backgroundImage: AssetImage(
+                            'assets/images/profile.jpeg',
+                          ),
+                          radius: 27,
+                        ),
+                      ),
+                      const SizedBox(height: 5),
+                      SizedBox(
+                        width: 285,
+                        child: Text(
+                          'Cromuel D. Barut',
+                          overflow: TextOverflow.ellipsis,
+                          style: theme.textTheme.headline5!.copyWith(
+                            color: Colors.white,
+                          ),
+                        ),
+                      ),
+                    ],
+                  ),
                 ),
               ],
             ),
-          ),
-        ],
+            const SizedBox(height: 20),
+            ListTile(
+              leading: const Icon(
+                Icons.home,
+                size: 30,
+              ),
+              title: Text(
+                'Home',
+                style: theme.textTheme.bodyText1!.copyWith(
+                  fontSize: kRegularFontSize,
+                ),
+              ),
+              onTap: () {},
+            ),
+            ListTile(
+              leading: const Icon(
+                Icons.archive,
+                size: 30,
+              ),
+              title: Text(
+                'Archive',
+                style: theme.textTheme.bodyText1!.copyWith(
+                  fontSize: kRegularFontSize,
+                ),
+              ),
+              onTap: () {},
+            ),
+            const SizedBox(height: 20),
+            Padding(
+              padding: const EdgeInsets.symmetric(horizontal: 20),
+              child: Row(
+                children: [
+                  Text(
+                    'Dark mode:',
+                    style: theme.textTheme.bodyText1!.copyWith(
+                      fontSize: kRegularFontSize,
+                    ),
+                  ),
+                  Switch(
+                    value: false,
+                    onChanged: (value) {},
+                  ),
+                ],
+              ),
+            ),
+            const Spacer(),
+            TDLButton(
+              label: 'Logout',
+              type: ButtonType.text,
+              iconData: Icons.logout,
+              onPressed: () {},
+            ),
+          ],
+        ),
       ),
     );
   }

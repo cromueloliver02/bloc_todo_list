@@ -12,8 +12,8 @@ class TodoListApp extends StatelessWidget {
       debugShowCheckedModeBanner: false,
       theme: lightTheme,
       darkTheme: darkTheme,
-      themeMode: ThemeMode.light,
-      // themeMode: ThemeMode.dark,
+      // themeMode: ThemeMode.light,
+      themeMode: ThemeMode.dark,
       home: const TodoListPage(),
     );
   }
