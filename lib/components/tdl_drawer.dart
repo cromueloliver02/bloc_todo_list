@@ -95,6 +95,24 @@ class TDLDrawer extends StatelessWidget {
             ),
             onTap: () {},
           ),
+          const SizedBox(height: 20),
+          Padding(
+            padding: const EdgeInsets.symmetric(horizontal: 20),
+            child: Row(
+              children: [
+                Text(
+                  'Dark mode:',
+                  style: theme.textTheme.bodyText1!.copyWith(
+                    fontSize: kRegularFontSize,
+                  ),
+                ),
+                Switch(
+                  value: false,
+                  onChanged: (value) {},
+                ),
+              ],
+            ),
+          ),
         ],
       ),
     );
