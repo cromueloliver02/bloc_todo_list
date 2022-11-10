@@ -12,9 +12,12 @@ class TodoListApp extends StatelessWidget {
       debugShowCheckedModeBanner: false,
       theme: lightTheme,
       darkTheme: darkTheme,
-      // themeMode: ThemeMode.light,
-      themeMode: ThemeMode.dark,
-      home: const TodoListPage(),
+      themeMode: ThemeMode.light,
+      // themeMode: ThemeMode.dark,
+      routes: {
+        HomePage.id: (ctx) => const HomePage(),
+        ArchivePage.id: (ctx) => const ArchivePage(),
+      },
     );
   }
 }

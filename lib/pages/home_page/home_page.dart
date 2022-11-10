@@ -4,10 +4,10 @@ import '../../components/components.dart';
 import './components/top_action_bar.dart';
 import '../../utils/functions.dart';
 
-class TodoListPage extends StatelessWidget {
+class HomePage extends StatelessWidget {
   static const id = '/';
 
-  const TodoListPage({super.key});
+  const HomePage({super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -20,7 +20,15 @@ class TodoListPage extends StatelessWidget {
           child: const Icon(Icons.add),
         ),
         body: CustomScrollView(slivers: [
-          const TDLSliverAppBar(),
+          TDLSliverAppBar(
+            title: 'Todo List',
+            actions: [
+              IconButton(
+                onPressed: () => showTodoModal(context),
+                icon: const Icon(Icons.add),
+              ),
+            ],
+          ),
           const SliverPadding(
             padding: EdgeInsets.symmetric(horizontal: 10),
             sliver: SliverToBoxAdapter(

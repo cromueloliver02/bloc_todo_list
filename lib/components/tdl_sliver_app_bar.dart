@@ -1,8 +1,14 @@
 import 'package:flutter/material.dart';
-import '../utils/functions.dart';
 
 class TDLSliverAppBar extends StatelessWidget {
-  const TDLSliverAppBar({super.key});
+  const TDLSliverAppBar({
+    super.key,
+    required this.title,
+    this.actions,
+  });
+
+  final String title;
+  final List<Widget>? actions;
 
   @override
   Widget build(BuildContext context) {
@@ -19,17 +25,12 @@ class TDLSliverAppBar extends StatelessWidget {
           const Icon(Icons.calendar_today),
           const SizedBox(width: 5),
           Text(
-            'Todo List',
+            title,
             style: theme.appBarTheme.titleTextStyle,
           ),
         ],
       ),
-      actions: [
-        IconButton(
-          onPressed: () => showTodoModal(context),
-          icon: const Icon(Icons.add),
-        ),
-      ],
+      actions: actions,
     );
   }
 }

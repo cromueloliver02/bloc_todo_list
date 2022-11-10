@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import '../components/components.dart';
+import '../pages/pages.dart';
 import '../utils/constants.dart';
 
 class TDLDrawer extends StatelessWidget {
@@ -83,7 +84,10 @@ class TDLDrawer extends StatelessWidget {
                   fontSize: kRegularFontSize,
                 ),
               ),
-              onTap: () {},
+              onTap: () => Navigator.pushReplacementNamed(
+                context,
+                HomePage.id,
+              ),
             ),
             ListTile(
               leading: const Icon(
@@ -96,7 +100,10 @@ class TDLDrawer extends StatelessWidget {
                   fontSize: kRegularFontSize,
                 ),
               ),
-              onTap: () {},
+              onTap: () => Navigator.pushReplacementNamed(
+                context,
+                ArchivePage.id,
+              ),
             ),
             const SizedBox(height: 20),
             Padding(
