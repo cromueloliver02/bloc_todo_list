@@ -1,3 +1,4 @@
+export 'tdl_bottom_nav_bar.dart';
 export 'tdl_button.dart';
 export 'tdl_drawer.dart';
 export 'tdl_sliver_app_bar.dart';
