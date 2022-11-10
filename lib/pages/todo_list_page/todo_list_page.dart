@@ -5,6 +5,8 @@ import './components/top_action_bar.dart';
 import '../../utils/functions.dart';
 
 class TodoListPage extends StatelessWidget {
+  static const id = '/';
+
   const TodoListPage({super.key});
 
   @override
@@ -12,6 +14,7 @@ class TodoListPage extends StatelessWidget {
     return KeyboardDismisser(
       gestures: const [GestureType.onTap],
       child: Scaffold(
+        drawer: const TDLDrawer(),
         floatingActionButton: FloatingActionButton(
           onPressed: () => showTodoModal(context),
           child: const Icon(Icons.add),
