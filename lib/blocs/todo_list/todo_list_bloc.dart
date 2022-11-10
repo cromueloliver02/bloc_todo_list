@@ -13,6 +13,7 @@ class TodoListBloc extends Bloc<TodoListEvent, TodoListState> {
   TodoListBloc() : super(TodoListState.initial()) {
     on<AddTodoEvent>(_addTodo);
     on<EditTodoEvent>(_editTodo);
+    on<DeleteTodoEvent>(_deleteTodo);
   }
 
   void _addTodo(AddTodoEvent event, Emitter<TodoListState> emit) {
@@ -32,6 +33,12 @@ class TodoListBloc extends Bloc<TodoListEvent, TodoListState> {
 
       return d.copyWith(title: event.title, description: event.desc);
     }).toList();
+
+    emit(state.copyWith(todos: todos));
+  }
+
+  void _deleteTodo(DeleteTodoEvent event, Emitter<TodoListState> emit) {
+    final todos = state.todos.where((d) => d.id != event.id).toList();
 
     emit(state.copyWith(todos: todos));
   }

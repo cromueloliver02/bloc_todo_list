@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:tuple/tuple.dart';
+import '../blocs/blocs.dart';
 import '../models/todo.dart';
 import '../utils/functions.dart';
 import '../utils/constants.dart';
@@ -12,13 +14,23 @@ class TDLTodoTile extends StatelessWidget {
 
   final Todo todo;
 
-  void _onSelected(BuildContext ctx, PopButtonType type) {
+  void _onSelected(BuildContext ctx, PopButtonType type) async {
+    final todoListBloc = ctx.read<TodoListBloc>();
+
     switch (type) {
       case PopButtonType.edit:
         showTodoModal(ctx, todo);
         break;
       case PopButtonType.delete:
-        (() {})(); // delete function
+        final response = await showConfirmDialog(
+          ctx,
+          title: 'Confirm delete',
+          description: 'Are you sure you want to delete?',
+        );
+
+        if (response != null && !response) break;
+
+        todoListBloc.add(DeleteTodoEvent(id: todo.id));
         break;
       case PopButtonType.archive:
         (() {})(); // archive function

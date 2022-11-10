@@ -40,3 +40,17 @@ class EditTodoEvent extends TodoListEvent {
   @override
   String toString() => 'EditTodoEvent(id: $id, title: $title, desc: $desc)';
 }
+
+class DeleteTodoEvent extends TodoListEvent {
+  final String id;
+
+  const DeleteTodoEvent({
+    required this.id,
+  });
+
+  @override
+  List<Object> get props => [id];
+
+  @override
+  String toString() => 'DeleteTodoEvent(id: $id)';
+}
