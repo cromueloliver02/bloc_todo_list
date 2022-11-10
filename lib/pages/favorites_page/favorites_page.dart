@@ -8,17 +8,17 @@ class FavoritesPage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return CustomScrollView(slivers: [
-      const TDLSliverAppBar(title: 'Favorites'),
-      SliverPadding(
-        padding: const EdgeInsets.symmetric(horizontal: 10),
-        sliver: SliverList(
-          delegate: SliverChildBuilderDelegate(
-            childCount: 15,
-            (ctx, idx) => const TDLTodoTile(),
-          ),
-        ),
-      ),
+    return const CustomScrollView(slivers: [
+      TDLSliverAppBar(title: 'Favorites'),
+      // SliverPadding(
+      //   padding: const EdgeInsets.symmetric(horizontal: 10),
+      //   sliver: SliverList(
+      //     delegate: SliverChildBuilderDelegate(
+      //       childCount: 15,
+      //       (ctx, idx) => const TDLTodoTile(),
+      //     ),
+      //   ),
+      // ),
     ]);
   }
 }

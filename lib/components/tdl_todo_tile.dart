@@ -1,9 +1,14 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_lorem/flutter_lorem.dart';
+import '../models/todo.dart';
 import '../utils/constants.dart';
 
 class TDLTodoTile extends StatelessWidget {
-  const TDLTodoTile({super.key});
+  const TDLTodoTile({
+    super.key,
+    required this.todo,
+  });
+
+  final Todo todo;
 
   @override
   Widget build(BuildContext context) {
@@ -13,11 +18,11 @@ class TDLTodoTile extends StatelessWidget {
       margin: const EdgeInsets.symmetric(vertical: 5),
       child: ListTile(
         leading: Checkbox(
-          value: true,
+          value: todo.isDone,
           onChanged: (value) {},
         ),
         title: Text(
-          lorem(paragraphs: 1, words: 15),
+          todo.title,
           overflow: TextOverflow.ellipsis,
           style: theme.textTheme.bodyText1!.copyWith(
             fontSize: kRegularFontSize,

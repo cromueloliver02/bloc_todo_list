@@ -8,19 +8,19 @@ class ArchivePage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      drawer: const TDLDrawer(),
+    return const Scaffold(
+      drawer: TDLDrawer(),
       body: CustomScrollView(slivers: [
-        const TDLSliverAppBar(title: 'Archive'),
-        SliverPadding(
-          padding: const EdgeInsets.symmetric(horizontal: 10),
-          sliver: SliverList(
-            delegate: SliverChildBuilderDelegate(
-              childCount: 15,
-              (ctx, idx) => const TDLTodoTile(),
-            ),
-          ),
-        ),
+        TDLSliverAppBar(title: 'Archive'),
+        // SliverPadding(
+        //   padding: const EdgeInsets.symmetric(horizontal: 10),
+        //   sliver: SliverList(
+        //     delegate: SliverChildBuilderDelegate(
+        //       childCount: 15,
+        //       (ctx, idx) => const TDLTodoTile(),
+        //     ),
+        //   ),
+        // ),
       ]),
     );
   }
