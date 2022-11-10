@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-
 import '../utils/constants.dart';
 
 class TDLBottomNavBar extends StatelessWidget {
@@ -7,9 +6,18 @@ class TDLBottomNavBar extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final theme = Theme.of(context);
+
     return Container(
-      color: Colors.white,
       padding: const EdgeInsets.symmetric(vertical: 10),
+      decoration: BoxDecoration(
+        color: theme.scaffoldBackgroundColor,
+        border: Border(
+          top: BorderSide(
+            color: theme.colorScheme.primary,
+          ),
+        ),
+      ),
       child: Row(
         mainAxisAlignment: MainAxisAlignment.spaceEvenly,
         children: const [
@@ -50,14 +58,14 @@ class _BottomNavButton extends StatelessWidget {
         Icon(
           iconData,
           size: 30,
-          color: isSelected ? theme.colorScheme.primary : Colors.grey,
+          color: isSelected ? kLightPrimaryColor : Colors.grey,
         ),
         const SizedBox(width: 5),
         Text(
           label,
           style: theme.textTheme.bodyText1!.copyWith(
             fontSize: kRegularFontSize,
-            color: isSelected ? theme.colorScheme.primary : Colors.grey,
+            color: isSelected ? kLightPrimaryColor : Colors.grey,
           ),
         ),
       ],

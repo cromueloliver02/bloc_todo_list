@@ -18,8 +18,8 @@ class TodoListApp extends StatelessWidget {
         debugShowCheckedModeBanner: false,
         theme: lightTheme,
         darkTheme: darkTheme,
-        themeMode: ThemeMode.light,
-        // themeMode: ThemeMode.dark,
+        // themeMode: ThemeMode.light,
+        themeMode: ThemeMode.dark,
         initialRoute: TabsPage.id,
         routes: {
           TabsPage.id: (ctx) => const TabsPage(),
