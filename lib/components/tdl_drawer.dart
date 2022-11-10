@@ -86,7 +86,7 @@ class TDLDrawer extends StatelessWidget {
               ),
               onTap: () => Navigator.pushReplacementNamed(
                 context,
-                HomePage.id,
+                TabsPage.id,
               ),
             ),
             ListTile(

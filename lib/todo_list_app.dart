@@ -14,8 +14,11 @@ class TodoListApp extends StatelessWidget {
       darkTheme: darkTheme,
       themeMode: ThemeMode.light,
       // themeMode: ThemeMode.dark,
+      initialRoute: TabsPage.id,
       routes: {
+        TabsPage.id: (ctx) => const TabsPage(),
         HomePage.id: (ctx) => const HomePage(),
+        FavoritesPage.id: (ctx) => const FavoritesPage(),
         ArchivePage.id: (ctx) => const ArchivePage(),
       },
     );

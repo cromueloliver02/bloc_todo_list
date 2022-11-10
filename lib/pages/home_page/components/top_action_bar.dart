@@ -10,11 +10,13 @@ class TopActionBar extends StatelessWidget {
     return Column(
       children: [
         const SizedBox(height: 10),
-        const TextField(
-          decoration: InputDecoration(
-            hintText: 'Search todos',
-            prefixIcon: Icon(Icons.search),
-            suffixIcon: Icon(Icons.clear),
+        const Material(
+          child: TextField(
+            decoration: InputDecoration(
+              hintText: 'Search todos',
+              prefixIcon: Icon(Icons.search),
+              suffixIcon: Icon(Icons.clear),
+            ),
           ),
         ),
         const SizedBox(height: 10),
