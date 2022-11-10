@@ -14,6 +14,7 @@ class TodoListBloc extends Bloc<TodoListEvent, TodoListState> {
     on<AddTodoEvent>(_addTodo);
     on<EditTodoEvent>(_editTodo);
     on<DeleteTodoEvent>(_deleteTodo);
+    on<ToggleArchiveTodoEvent>(_toggleArchiveTodo);
   }
 
   void _addTodo(AddTodoEvent event, Emitter<TodoListState> emit) {
@@ -39,6 +40,17 @@ class TodoListBloc extends Bloc<TodoListEvent, TodoListState> {
 
   void _deleteTodo(DeleteTodoEvent event, Emitter<TodoListState> emit) {
     final todos = state.todos.where((d) => d.id != event.id).toList();
+
+    emit(state.copyWith(todos: todos));
+  }
+
+  void _toggleArchiveTodo(
+      ToggleArchiveTodoEvent event, Emitter<TodoListState> emit) {
+    final todos = state.todos.map((d) {
+      if (d.id != event.id) return d;
+
+      return d.copyWith(isArchived: !d.isArchived);
+    }).toList();
 
     emit(state.copyWith(todos: todos));
   }
