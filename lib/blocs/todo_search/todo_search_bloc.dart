@@ -6,7 +6,7 @@ import '../blocs.dart';
 part 'todo_search_event.dart';
 part 'todo_search_state.dart';
 
-class TodoSearchBloc extends HydratedBloc<TodoSearchEvent, TodoSearchState> {
+class TodoSearchBloc extends Bloc<TodoSearchEvent, TodoSearchState> {
   TodoSearchBloc() : super(TodoSearchState.initial()) {
     on<SearchTodoEvent>(
       _searchTodo,
@@ -25,15 +25,5 @@ class TodoSearchBloc extends HydratedBloc<TodoSearchEvent, TodoSearchState> {
     final keywords = event.keywords;
 
     emit(state.copyWith(keywords: keywords));
-  }
-
-  @override
-  TodoSearchState? fromJson(Map<String, dynamic> json) {
-    return TodoSearchState.fromMap(json);
-  }
-
-  @override
-  Map<String, dynamic>? toJson(TodoSearchState state) {
-    return state.toMap();
   }
 }
