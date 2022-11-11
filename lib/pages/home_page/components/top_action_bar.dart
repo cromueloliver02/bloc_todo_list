@@ -2,11 +2,26 @@ import 'package:flutter/material.dart';
 import '../../../blocs/blocs.dart';
 import './filter_button.dart';
 
-class TopActionBar extends StatelessWidget {
+class TopActionBar extends StatefulWidget {
   const TopActionBar({super.key});
 
-  void _onPressed(BuildContext ctx, Filter filter) =>
+  @override
+  State<TopActionBar> createState() => _TopActionBarState();
+}
+
+class _TopActionBarState extends State<TopActionBar> {
+  late final TextEditingController _searchController;
+
+  void _onSearch(BuildContext ctx, String keywords) =>
+      ctx.read<TodoSearchBloc>().add(SearchTodoEvent(keywords: keywords));
+
+  void _onFilter(BuildContext ctx, Filter filter) =>
       ctx.read<TodoFilterBloc>().add(ChangeFilterEvent(filter: filter));
+
+  void _onClearText(BuildContext ctx) {
+    _onSearch(ctx, '');
+    _searchController.clear();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -14,15 +29,22 @@ class TopActionBar extends StatelessWidget {
       children: [
         const SizedBox(height: 10),
         Material(
-          child: TextField(
-            decoration: const InputDecoration(
-              hintText: 'Search todos',
-              prefixIcon: Icon(Icons.search),
-              suffixIcon: Icon(Icons.clear),
+          child: BlocSelector<TodoSearchBloc, TodoSearchState, String>(
+            selector: (state) => state.keywords,
+            builder: (ctx, keywords) => TextField(
+              controller: _searchController,
+              decoration: InputDecoration(
+                hintText: 'Search todos',
+                prefixIcon: const Icon(Icons.search),
+                suffixIcon: keywords.isNotEmpty
+                    ? GestureDetector(
+                        onTap: () => _onClearText(context),
+                        child: const Icon(Icons.clear),
+                      )
+                    : null,
+              ),
+              onChanged: (keywords) => _onSearch(context, keywords),
             ),
-            onChanged: (value) => context
-                .read<TodoSearchBloc>()
-                .add(SearchTodoEvent(keywords: value)),
           ),
         ),
         const SizedBox(height: 10),
@@ -36,7 +58,7 @@ class TopActionBar extends StatelessWidget {
                 title: Filter.values[idx].name.toUpperCase(),
                 filter: Filter.values[idx],
                 isCurrent: Filter.values[idx] == filter,
-                onPressed: (filter) => _onPressed(ctx, filter),
+                onPressed: (filter) => _onFilter(ctx, filter),
               ),
             ),
           ),
@@ -44,5 +66,17 @@ class TopActionBar extends StatelessWidget {
         const SizedBox(height: 10),
       ],
     );
+  }
+
+  @override
+  void initState() {
+    _searchController = TextEditingController();
+    super.initState();
+  }
+
+  @override
+  void dispose() {
+    _searchController.dispose();
+    super.dispose();
   }
 }
