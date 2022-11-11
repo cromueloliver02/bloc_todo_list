@@ -15,7 +15,7 @@ class FavoritesPage extends StatelessWidget {
         padding: const EdgeInsets.fromLTRB(10, 15, 10, 0),
         sliver: SliverToBoxAdapter(
           child: BlocBuilder<FavoriteTodosBloc, FavoriteTodosState>(
-            builder: (ctx, state) => TodoList(todos: state.favoriteTodos),
+            builder: (ctx, state) => TDLTodoList(todos: state.favoriteTodos),
           ),
         ),
       ),

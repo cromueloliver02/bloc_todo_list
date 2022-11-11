@@ -17,7 +17,7 @@ class ArchivePage extends StatelessWidget {
           padding: const EdgeInsets.fromLTRB(10, 15, 10, 0),
           sliver: SliverToBoxAdapter(
             child: BlocBuilder<TodoListBloc, TodoListState>(
-              builder: (ctx, state) => TodoList(todos: state.archivedTodos),
+              builder: (ctx, state) => TDLTodoList(todos: state.archivedTodos),
             ),
           ),
         ),
