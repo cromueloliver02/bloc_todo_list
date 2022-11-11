@@ -1,5 +1,4 @@
 import 'package:equatable/equatable.dart';
-import 'package:flutter_lorem/flutter_lorem.dart';
 import 'package:uuid/uuid.dart';
 
 const uuid = Uuid();
@@ -34,9 +33,8 @@ class Todo extends Equatable {
   }
 
   @override
-  String toString() {
-    return 'Todo(id: $id, title: $title, description: $description, isDone: $isDone, isFavorite: $isFavorite, isArchived: $isArchived)';
-  }
+  String toString() =>
+      'TodoListState(id: $id, title: $title, description: $description, isDone: $isDone, isFavorite: $isFavorite, isArchived: $isArchived)';
 
   Todo copyWith({
     String? id,
@@ -55,22 +53,26 @@ class Todo extends Equatable {
       isArchived: isArchived ?? this.isArchived,
     );
   }
-}
 
-final dummyTodos = [
-  Todo(
-    id: uuid.v4(),
-    title: lorem(paragraphs: 1, words: 7),
-    description: lorem(paragraphs: 1, words: 20),
-  ),
-  Todo(
-    id: uuid.v4(),
-    title: lorem(paragraphs: 1, words: 7),
-    description: lorem(paragraphs: 1, words: 20),
-  ),
-  Todo(
-    id: uuid.v4(),
-    title: lorem(paragraphs: 1, words: 7),
-    description: lorem(paragraphs: 1, words: 20),
-  ),
-];
+  Map<String, dynamic> toMap() {
+    return <String, dynamic>{
+      'id': id,
+      'title': title,
+      'description': description,
+      'isDone': isDone,
+      'isFavorite': isFavorite,
+      'isArchived': isArchived,
+    };
+  }
+
+  factory Todo.fromMap(Map<String, dynamic> map) {
+    return Todo(
+      id: map['id'] as String,
+      title: map['title'] as String,
+      description: map['description'] as String,
+      isDone: map['isDone'] as bool,
+      isFavorite: map['isFavorite'] as bool,
+      isArchived: map['isArchived'] as bool,
+    );
+  }
+}

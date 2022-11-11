@@ -24,4 +24,16 @@ class TabState extends Equatable {
       index: index ?? this.index,
     );
   }
+
+  Map<String, dynamic> toMap() {
+    return <String, dynamic>{
+      'index': index,
+    };
+  }
+
+  factory TabState.fromMap(Map<String, dynamic> map) {
+    return TabState(
+      index: map['index'] as int,
+    );
+  }
 }

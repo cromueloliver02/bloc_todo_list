@@ -24,4 +24,20 @@ class FavoriteTodosState extends Equatable {
       favoriteTodos: favoriteTodos ?? this.favoriteTodos,
     );
   }
+
+  Map<String, dynamic> toMap() {
+    return <String, dynamic>{
+      'favoriteTodos': favoriteTodos.map((x) => x.toMap()).toList(),
+    };
+  }
+
+  factory FavoriteTodosState.fromMap(Map<String, dynamic> map) {
+    return FavoriteTodosState(
+      favoriteTodos: List<Todo>.from(
+        (map['favoriteTodos'] as List<dynamic>).map<Todo>(
+          (x) => Todo.fromMap(x as Map<String, dynamic>),
+        ),
+      ),
+    );
+  }
 }

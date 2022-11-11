@@ -1,5 +1,4 @@
 import 'dart:async';
-// ignore: depend_on_referenced_packages
 import 'package:equatable/equatable.dart';
 import '../blocs.dart';
 
@@ -8,7 +7,8 @@ import '../../models/todo.dart';
 part 'favorite_todos_event.dart';
 part 'favorite_todos_state.dart';
 
-class FavoriteTodosBloc extends Bloc<FavoriteTodosEvent, FavoriteTodosState> {
+class FavoriteTodosBloc
+    extends HydratedBloc<FavoriteTodosEvent, FavoriteTodosState> {
   late final StreamSubscription todoListSubscription;
   final TodoListBloc todoListBloc;
   final List<Todo> initialFavoriteTodos;
@@ -37,5 +37,15 @@ class FavoriteTodosBloc extends Bloc<FavoriteTodosEvent, FavoriteTodosState> {
         todoListBloc.state.todos.where((d) => d.isFavorite).toList();
 
     emit(state.copyWith(favoriteTodos: favoriteTodos));
+  }
+
+  @override
+  FavoriteTodosState? fromJson(Map<String, dynamic> json) {
+    return FavoriteTodosState.fromMap(json);
+  }
+
+  @override
+  Map<String, dynamic>? toJson(FavoriteTodosState state) {
+    return state.toMap();
   }
 }

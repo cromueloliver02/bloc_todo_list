@@ -24,4 +24,16 @@ class TodoSearchState extends Equatable {
       keywords: keywords ?? this.keywords,
     );
   }
+
+  Map<String, dynamic> toMap() {
+    return <String, dynamic>{
+      'keywords': keywords,
+    };
+  }
+
+  factory TodoSearchState.fromMap(Map<String, dynamic> map) {
+    return TodoSearchState(
+      keywords: map['keywords'] as String,
+    );
+  }
 }

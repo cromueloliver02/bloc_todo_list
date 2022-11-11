@@ -10,9 +10,9 @@ class TodoListState extends Equatable {
   });
 
   factory TodoListState.initial() {
-    return TodoListState(
-      todos: dummyTodos,
-      archivedTodos: const [],
+    return const TodoListState(
+      todos: [],
+      archivedTodos: [],
     );
   }
 
@@ -30,6 +30,28 @@ class TodoListState extends Equatable {
     return TodoListState(
       todos: todos ?? this.todos,
       archivedTodos: archivedTodos ?? this.archivedTodos,
+    );
+  }
+
+  Map<String, dynamic> toMap() {
+    return <String, dynamic>{
+      'todos': todos.map((x) => x.toMap()).toList(),
+      'archivedTodos': archivedTodos.map((x) => x.toMap()).toList(),
+    };
+  }
+
+  factory TodoListState.fromMap(Map<String, dynamic> map) {
+    return TodoListState(
+      todos: List<Todo>.from(
+        (map['todos'] as List<dynamic>).map<Todo>(
+          (x) => Todo.fromMap(x as Map<String, dynamic>),
+        ),
+      ),
+      archivedTodos: List<Todo>.from(
+        (map['archivedTodos'] as List<dynamic>).map<Todo>(
+          (x) => Todo.fromMap(x as Map<String, dynamic>),
+        ),
+      ),
     );
   }
 }

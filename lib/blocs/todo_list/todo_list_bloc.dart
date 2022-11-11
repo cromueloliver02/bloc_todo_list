@@ -1,13 +1,12 @@
-// ignore: depend_on_referenced_packages
-import 'package:bloc/bloc.dart';
 import 'package:equatable/equatable.dart';
 
+import '../blocs.dart';
 import '../../models/models.dart';
 
 part 'todo_list_event.dart';
 part 'todo_list_state.dart';
 
-class TodoListBloc extends Bloc<TodoListEvent, TodoListState> {
+class TodoListBloc extends HydratedBloc<TodoListEvent, TodoListState> {
   TodoListBloc() : super(TodoListState.initial()) {
     on<AddTodoEvent>(_addTodo);
     on<EditTodoEvent>(_editTodo);
@@ -96,5 +95,15 @@ class TodoListBloc extends Bloc<TodoListEvent, TodoListState> {
     }).toList();
 
     emit(state.copyWith(todos: todos));
+  }
+
+  @override
+  TodoListState? fromJson(Map<String, dynamic> json) {
+    return TodoListState.fromMap(json);
+  }
+
+  @override
+  Map<String, dynamic>? toJson(TodoListState state) {
+    return state.toMap();
   }
 }

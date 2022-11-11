@@ -8,7 +8,8 @@ import '../../models/todo.dart';
 part 'filtered_todos_event.dart';
 part 'filtered_todos_state.dart';
 
-class FilteredTodosBloc extends Bloc<FilteredTodosEvent, FilteredTodosState> {
+class FilteredTodosBloc
+    extends HydratedBloc<FilteredTodosEvent, FilteredTodosState> {
   late final StreamSubscription todoFilterSubscription;
   late final StreamSubscription todoSearchSubscription;
   late final StreamSubscription todoListSubscription;
@@ -76,5 +77,15 @@ class FilteredTodosBloc extends Bloc<FilteredTodosEvent, FilteredTodosState> {
     }
 
     emit(state.copyWith(filteredTodos: filteredTodos));
+  }
+
+  @override
+  FilteredTodosState? fromJson(Map<String, dynamic> json) {
+    return FilteredTodosState.fromMap(json);
+  }
+
+  @override
+  Map<String, dynamic>? toJson(FilteredTodosState state) {
+    return state.toMap();
   }
 }
