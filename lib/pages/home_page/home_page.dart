@@ -31,13 +31,13 @@ class HomePage extends StatelessWidget {
       ),
       SliverPadding(
         padding: const EdgeInsets.symmetric(horizontal: 10),
-        sliver: BlocSelector<TodoListBloc, TodoListState, List<Todo>>(
-          selector: (state) => state.todos,
-          builder: (ctx, todos) => SliverList(
+        sliver: BlocSelector<FilteredTodosBloc, FilteredTodosState, List<Todo>>(
+          selector: (state) => state.filteredTodos,
+          builder: (ctx, filteredTodos) => SliverList(
             delegate: SliverChildBuilderDelegate(
-              childCount: todos.length,
+              childCount: filteredTodos.length,
               (ctx, idx) {
-                final todo = todos[idx];
+                final todo = filteredTodos[idx];
 
                 return TDLTodoTile(todo: todo);
               },
