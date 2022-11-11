@@ -33,6 +33,10 @@ class FilteredTodosBloc extends Bloc<FilteredTodosEvent, FilteredTodosState> {
       add(SetFilteredTodos());
     });
 
+    todoListSubscription = todoListBloc.stream.listen((state) {
+      add(SetFilteredTodos());
+    });
+
     on<SetFilteredTodos>(_setFilteredTodos);
   }
 
