@@ -3,9 +3,7 @@ import 'dart:async';
 // ignore: depend_on_referenced_packages
 import 'package:bloc/bloc.dart';
 import 'package:equatable/equatable.dart';
-
-import '../todo_filter/todo_filter_bloc.dart';
-import '../todo_list/todo_list_bloc.dart';
+import '../blocs.dart';
 
 import '../../models/todo.dart';
 
@@ -14,17 +12,24 @@ part 'filtered_todos_state.dart';
 
 class FilteredTodosBloc extends Bloc<FilteredTodosEvent, FilteredTodosState> {
   late final StreamSubscription todoFilterSubscription;
+  late final StreamSubscription todoSearchSubscription;
   late final StreamSubscription todoListSubscription;
   final TodoFilterBloc todoFilterBloc;
+  final TodoSearchBloc todoSearchBloc;
   final TodoListBloc todoListBloc;
   final List<Todo> initialFilteredTodos;
 
   FilteredTodosBloc({
     required this.todoFilterBloc,
+    required this.todoSearchBloc,
     required this.todoListBloc,
     required this.initialFilteredTodos,
   }) : super(FilteredTodosState(filteredTodos: initialFilteredTodos)) {
     todoFilterSubscription = todoFilterBloc.stream.listen((state) {
+      add(SetFilteredTodos());
+    });
+
+    todoSearchSubscription = todoSearchBloc.stream.listen((state) {
       add(SetFilteredTodos());
     });
 
@@ -34,6 +39,7 @@ class FilteredTodosBloc extends Bloc<FilteredTodosEvent, FilteredTodosState> {
   @override
   Future<void> close() {
     todoFilterSubscription.cancel();
+    todoSearchSubscription.cancel();
     todoListSubscription.cancel();
     return super.close();
   }
@@ -43,6 +49,7 @@ class FilteredTodosBloc extends Bloc<FilteredTodosEvent, FilteredTodosState> {
     Emitter<FilteredTodosState> emit,
   ) {
     final filter = todoFilterBloc.state.filter;
+    final keywords = todoSearchBloc.state.keywords;
     final todos = todoListBloc.state.todos;
     List<Todo> filteredTodos = [];
 
@@ -56,6 +63,14 @@ class FilteredTodosBloc extends Bloc<FilteredTodosEvent, FilteredTodosState> {
       case Filter.all:
       default:
         filteredTodos = todos;
+    }
+
+    if (keywords.isNotEmpty) {
+      filteredTodos = todos
+          .where((d) =>
+              d.title.toLowerCase().contains(keywords) ||
+              d.description.toLowerCase().contains(keywords))
+          .toList();
     }
 
     emit(state.copyWith(filteredTodos: filteredTodos));
