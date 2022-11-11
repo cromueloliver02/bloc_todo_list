@@ -54,15 +54,16 @@ class TDLTodoTile extends StatelessWidget {
               value: todo.isDone,
               onChanged: (value) {},
             ),
-            GestureDetector(
-              onTap: () => context
-                  .read<TodoListBloc>()
-                  .add(ToggleFavoriteTodoEvent(id: todo.id)),
-              child: Icon(
-                todo.isFavorite ? Icons.favorite : Icons.favorite_border,
-                color: Colors.red,
+            if (!todo.isArchived)
+              GestureDetector(
+                onTap: () => context
+                    .read<TodoListBloc>()
+                    .add(ToggleFavoriteTodoEvent(id: todo.id)),
+                child: Icon(
+                  todo.isFavorite ? Icons.favorite : Icons.favorite_border,
+                  color: Colors.red,
+                ),
               ),
-            ),
           ],
         ),
         title: Text(
