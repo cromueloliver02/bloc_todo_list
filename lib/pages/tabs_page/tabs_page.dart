@@ -21,7 +21,10 @@ class TabsPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return KeyboardDismisser(
-      gestures: const [GestureType.onTap],
+      gestures: const [
+        GestureType.onTap,
+        GestureType.onPanUpdateDownDirection,
+      ],
       child: SafeArea(
         top: false,
         child: BlocSelector<TabBloc, TabState, int>(
