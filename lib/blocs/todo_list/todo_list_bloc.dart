@@ -1,8 +1,6 @@
 // ignore: depend_on_referenced_packages
 import 'package:bloc/bloc.dart';
 import 'package:equatable/equatable.dart';
-import 'package:flutter_lorem/flutter_lorem.dart';
-import 'package:uuid/uuid.dart';
 
 import '../../models/models.dart';
 
@@ -14,7 +12,8 @@ class TodoListBloc extends Bloc<TodoListEvent, TodoListState> {
     on<AddTodoEvent>(_addTodo);
     on<EditTodoEvent>(_editTodo);
     on<DeleteTodoEvent>(_deleteTodo);
-    on<ToggleArchiveTodoEvent>(_toggleArchiveTodo);
+    on<ArchiveTodoEvent>(_archiveTodo);
+    on<RestoreTodoEvent>(_restoreTodo);
   }
 
   void _addTodo(AddTodoEvent event, Emitter<TodoListState> emit) {
@@ -40,18 +39,38 @@ class TodoListBloc extends Bloc<TodoListEvent, TodoListState> {
 
   void _deleteTodo(DeleteTodoEvent event, Emitter<TodoListState> emit) {
     final todos = state.todos.where((d) => d.id != event.id).toList();
+    final archivedTodos =
+        state.archivedTodos.where((d) => d.id != event.id).toList();
 
-    emit(state.copyWith(todos: todos));
+    emit(state.copyWith(
+      todos: todos,
+      archivedTodos: archivedTodos,
+    ));
   }
 
-  void _toggleArchiveTodo(
-      ToggleArchiveTodoEvent event, Emitter<TodoListState> emit) {
-    final todos = state.todos.map((d) {
-      if (d.id != event.id) return d;
+  void _archiveTodo(ArchiveTodoEvent event, Emitter<TodoListState> emit) {
+    final todo = state.todos.firstWhere((d) => d.id == event.id);
+    final todos = state.todos.where((d) => d.id != event.id).toList();
+    final archivedTodos = [
+      todo.copyWith(isArchived: true),
+      ...state.archivedTodos
+    ];
 
-      return d.copyWith(isArchived: !d.isArchived);
-    }).toList();
+    emit(state.copyWith(
+      todos: todos,
+      archivedTodos: archivedTodos,
+    ));
+  }
 
-    emit(state.copyWith(todos: todos));
+  void _restoreTodo(RestoreTodoEvent event, Emitter<TodoListState> emit) {
+    final todo = state.archivedTodos.firstWhere((d) => d.id == event.id);
+    final todos = [todo.copyWith(isArchived: false), ...state.todos];
+    final archivedTodos =
+        state.archivedTodos.where((d) => d.id != event.id).toList();
+
+    emit(state.copyWith(
+      todos: todos,
+      archivedTodos: archivedTodos,
+    ));
   }
 }

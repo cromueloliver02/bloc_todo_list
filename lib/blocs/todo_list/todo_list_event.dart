@@ -55,10 +55,21 @@ class DeleteTodoEvent extends TodoListEvent {
   String toString() => 'DeleteTodoEvent(id: $id)';
 }
 
-class ToggleArchiveTodoEvent extends TodoListEvent {
+class ArchiveTodoEvent extends TodoListEvent {
   final String id;
 
-  const ToggleArchiveTodoEvent({
+  const ArchiveTodoEvent({
+    required this.id,
+  });
+
+  @override
+  List<Object> get props => [id];
+}
+
+class RestoreTodoEvent extends TodoListEvent {
+  final String id;
+
+  const RestoreTodoEvent({
     required this.id,
   });
 

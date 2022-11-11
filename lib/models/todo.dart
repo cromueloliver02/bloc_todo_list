@@ -1,4 +1,8 @@
 import 'package:equatable/equatable.dart';
+import 'package:flutter_lorem/flutter_lorem.dart';
+import 'package:uuid/uuid.dart';
+
+const uuid = Uuid();
 
 class Todo extends Equatable {
   final String id;
@@ -52,3 +56,21 @@ class Todo extends Equatable {
     );
   }
 }
+
+final dummyTodos = [
+  Todo(
+    id: uuid.v4(),
+    title: lorem(paragraphs: 1, words: 7),
+    description: lorem(paragraphs: 1, words: 20),
+  ),
+  Todo(
+    id: uuid.v4(),
+    title: lorem(paragraphs: 1, words: 7),
+    description: lorem(paragraphs: 1, words: 20),
+  ),
+  Todo(
+    id: uuid.v4(),
+    title: lorem(paragraphs: 1, words: 7),
+    description: lorem(paragraphs: 1, words: 20),
+  ),
+];

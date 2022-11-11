@@ -1,4 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import '../../blocs/blocs.dart';
+import '../../models/todo.dart';
 import '../../components/components.dart';
 
 class ArchivePage extends StatelessWidget {
@@ -8,19 +11,26 @@ class ArchivePage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return const Scaffold(
-      drawer: TDLDrawer(),
+    return Scaffold(
+      drawer: const TDLDrawer(),
       body: CustomScrollView(slivers: [
-        TDLSliverAppBar(title: 'Archive'),
-        // SliverPadding(
-        //   padding: const EdgeInsets.symmetric(horizontal: 10),
-        //   sliver: SliverList(
-        //     delegate: SliverChildBuilderDelegate(
-        //       childCount: 15,
-        //       (ctx, idx) => const TDLTodoTile(),
-        //     ),
-        //   ),
-        // ),
+        const TDLSliverAppBar(title: 'Archive'),
+        SliverPadding(
+          padding: const EdgeInsets.symmetric(horizontal: 10),
+          sliver: BlocSelector<TodoListBloc, TodoListState, List<Todo>>(
+            selector: (state) => state.archivedTodos,
+            builder: (context, archivedTodos) => SliverList(
+              delegate: SliverChildBuilderDelegate(
+                childCount: archivedTodos.length,
+                (ctx, idx) {
+                  final archivedTodo = archivedTodos[idx];
+
+                  return TDLTodoTile(todo: archivedTodo);
+                },
+              ),
+            ),
+          ),
+        ),
       ]),
     );
   }

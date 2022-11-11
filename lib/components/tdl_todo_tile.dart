@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:tuple/tuple.dart';
 import '../blocs/blocs.dart';
 import '../models/todo.dart';
 import '../utils/functions.dart';
@@ -33,7 +32,10 @@ class TDLTodoTile extends StatelessWidget {
         todoListBloc.add(DeleteTodoEvent(id: todo.id));
         break;
       case PopButtonType.archive:
-        (() {})(); // archive function
+        todoListBloc.add(ArchiveTodoEvent(id: todo.id));
+        break;
+      case PopButtonType.restore:
+        todoListBloc.add(RestoreTodoEvent(id: todo.id));
         break;
     }
   }
@@ -41,12 +43,6 @@ class TDLTodoTile extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final theme = Theme.of(context);
-
-    const popupButtons = [
-      Tuple3('Edit', Icons.edit, PopButtonType.edit),
-      Tuple3('Delete', Icons.delete, PopButtonType.delete),
-      Tuple3('Archive', Icons.archive, PopButtonType.archive),
-    ];
 
     return Container(
       margin: const EdgeInsets.symmetric(vertical: 5),
@@ -65,25 +61,66 @@ class TDLTodoTile extends StatelessWidget {
         ),
         trailing: PopupMenuButton<PopButtonType>(
           onSelected: (type) => _onSelected(context, type),
-          itemBuilder: (ctx) => popupButtons
-              .map((d) => PopupMenuItem(
-                    value: d.item3,
-                    child: Row(
-                      children: [
-                        Icon(
-                          d.item2,
-                          color: theme.iconTheme.color,
-                        ),
-                        const SizedBox(width: 8),
-                        Text(d.item1),
-                      ],
+          itemBuilder: (ctx) => [
+            PopupMenuItem(
+              value: PopButtonType.edit,
+              child: Row(
+                children: [
+                  Icon(
+                    Icons.edit,
+                    color: theme.iconTheme.color,
+                  ),
+                  const SizedBox(width: 8),
+                  const Text('Edit'),
+                ],
+              ),
+            ),
+            PopupMenuItem(
+              value: PopButtonType.delete,
+              child: Row(
+                children: [
+                  Icon(
+                    Icons.delete,
+                    color: theme.iconTheme.color,
+                  ),
+                  const SizedBox(width: 8),
+                  const Text('Delete'),
+                ],
+              ),
+            ),
+            if (!todo.isArchived)
+              PopupMenuItem(
+                value: PopButtonType.archive,
+                child: Row(
+                  children: [
+                    Icon(
+                      Icons.archive,
+                      color: theme.iconTheme.color,
                     ),
-                  ))
-              .toList(),
+                    const SizedBox(width: 8),
+                    const Text('Archive'),
+                  ],
+                ),
+              ),
+            if (todo.isArchived)
+              PopupMenuItem(
+                value: PopButtonType.restore,
+                child: Row(
+                  children: [
+                    Icon(
+                      Icons.unarchive,
+                      color: theme.iconTheme.color,
+                    ),
+                    const SizedBox(width: 8),
+                    const Text('Restore'),
+                  ],
+                ),
+              ),
+          ],
         ),
       ),
     );
   }
 }
 
-enum PopButtonType { edit, delete, archive }
+enum PopButtonType { edit, delete, archive, restore }
