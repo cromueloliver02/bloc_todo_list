@@ -68,24 +68,30 @@ class _BottomNavButton extends StatelessWidget {
   Widget build(BuildContext context) {
     final theme = Theme.of(context);
 
-    return GestureDetector(
+    return InkWell(
       onTap: () => onPressed(tab),
-      child: Row(
-        children: [
-          Icon(
-            iconData,
-            size: 30,
-            color: tab == currentTab ? kLightPrimaryColor : Colors.grey,
-          ),
-          const SizedBox(width: 5),
-          Text(
-            label,
-            style: theme.textTheme.bodyText1!.copyWith(
-              fontSize: kRegularFontSize,
+      child: Padding(
+        padding: const EdgeInsets.symmetric(
+          horizontal: 20,
+          vertical: 2,
+        ),
+        child: Row(
+          children: [
+            Icon(
+              iconData,
+              size: 30,
               color: tab == currentTab ? kLightPrimaryColor : Colors.grey,
             ),
-          ),
-        ],
+            const SizedBox(width: 5),
+            Text(
+              label,
+              style: theme.textTheme.bodyText1!.copyWith(
+                fontSize: kRegularFontSize,
+                color: tab == currentTab ? kLightPrimaryColor : Colors.grey,
+              ),
+            ),
+          ],
+        ),
       ),
     );
   }
