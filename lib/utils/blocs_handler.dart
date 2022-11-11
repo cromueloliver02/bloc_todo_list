@@ -7,6 +7,7 @@ class BlocsHandler {
     BlocProvider<TodoSearchBloc>(create: (ctx) => TodoSearchBloc()),
     BlocProvider<TodoFilterBloc>(create: (ctx) => TodoFilterBloc()),
     BlocProvider<TabBloc>(create: (ctx) => TabBloc()),
+    BlocProvider<ThemeBloc>(create: (ctx) => ThemeBloc()),
     BlocProvider<FavoriteTodosBloc>(
       create: (ctx) => FavoriteTodosBloc(
         todoListBloc: ctx.read<TodoListBloc>(),

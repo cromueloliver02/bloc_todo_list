@@ -1,10 +1,15 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import '../blocs/blocs.dart';
 import '../components/components.dart';
 import '../pages/pages.dart';
 import '../utils/constants.dart';
 
 class TDLDrawer extends StatelessWidget {
   const TDLDrawer({Key? key}) : super(key: key);
+
+  void _onToggleTheme(BuildContext ctx) =>
+      ctx.read<ThemeBloc>().add(ToggleThemeEvent());
 
   @override
   Widget build(BuildContext context) {
@@ -116,9 +121,13 @@ class TDLDrawer extends StatelessWidget {
                       fontSize: kRegularFontSize,
                     ),
                   ),
-                  Switch(
-                    value: false,
-                    onChanged: (value) {},
+                  BlocSelector<ThemeBloc, ThemeState, bool>(
+                    selector: (state) => state.isDark,
+                    builder: (ctx, isDark) => Switch(
+                      value: isDark,
+                      activeColor: theme.primaryColorLight,
+                      onChanged: (value) => _onToggleTheme(context),
+                    ),
                   ),
                 ],
               ),
@@ -130,6 +139,7 @@ class TDLDrawer extends StatelessWidget {
               iconData: Icons.logout,
               onPressed: () {},
             ),
+            const SizedBox(height: 20),
           ],
         ),
       ),
