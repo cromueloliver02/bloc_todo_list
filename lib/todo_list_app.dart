@@ -1,40 +1,18 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import './blocs/blocs.dart';
 import './pages/pages.dart';
+import '../utils/bloc_providers.dart';
 import './utils/tdl_theme.dart';
 
 class TodoListApp extends StatelessWidget {
-  const TodoListApp({super.key});
+  TodoListApp({super.key});
+
+  final _blocsHandler = BlocsHandler();
 
   @override
   Widget build(BuildContext context) {
     return MultiBlocProvider(
-      providers: [
-        BlocProvider(create: (ctx) => TodoListBloc()),
-        BlocProvider(
-          create: (ctx) => FavoriteTodosBloc(
-            todoListBloc: ctx.read<TodoListBloc>(),
-            initialFavoriteTodos: ctx
-                .read<TodoListBloc>()
-                .state
-                .todos
-                .where((d) => d.isFavorite)
-                .toList(),
-          ),
-        ),
-        BlocProvider(create: (ctx) => TodoSearchBloc()),
-        BlocProvider(create: (ctx) => TodoFilterBloc()),
-        BlocProvider(create: (ctx) => TabBloc()),
-        BlocProvider(
-          create: (ctx) => FilteredTodosBloc(
-            todoFilterBloc: ctx.read<TodoFilterBloc>(),
-            todoSearchBloc: ctx.read<TodoSearchBloc>(),
-            todoListBloc: ctx.read<TodoListBloc>(),
-            initialFilteredTodos: ctx.read<TodoListBloc>().state.todos,
-          ),
-        ),
-      ],
+      providers: _blocsHandler.blocProviders,
       child: MaterialApp(
         title: 'Todo List',
         debugShowCheckedModeBanner: false,
