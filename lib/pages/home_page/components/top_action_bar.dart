@@ -16,13 +16,16 @@ class TopActionBar extends StatelessWidget {
     return Column(
       children: [
         const SizedBox(height: 10),
-        const Material(
+        Material(
           child: TextField(
-            decoration: InputDecoration(
+            decoration: const InputDecoration(
               hintText: 'Search todos',
               prefixIcon: Icon(Icons.search),
               suffixIcon: Icon(Icons.clear),
             ),
+            onChanged: (value) => context
+                .read<TodoSearchBloc>()
+                .add(SearchTodoEvent(keywords: value)),
           ),
         ),
         const SizedBox(height: 10),
