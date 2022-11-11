@@ -14,6 +14,7 @@ class TodoListBloc extends Bloc<TodoListEvent, TodoListState> {
     on<DeleteTodoEvent>(_deleteTodo);
     on<ArchiveTodoEvent>(_archiveTodo);
     on<RestoreTodoEvent>(_restoreTodo);
+    on<ToggleFavoriteTodoEvent>(_toggleFavoriteTodo);
   }
 
   void _addTodo(AddTodoEvent event, Emitter<TodoListState> emit) {
@@ -72,5 +73,16 @@ class TodoListBloc extends Bloc<TodoListEvent, TodoListState> {
       todos: todos,
       archivedTodos: archivedTodos,
     ));
+  }
+
+  void _toggleFavoriteTodo(
+    ToggleFavoriteTodoEvent event,
+    Emitter<TodoListState> emit,
+  ) {
+    final todos = state.todos.map((d) {
+      return d.id == event.id ? d.copyWith(isFavorite: !d.isFavorite) : d;
+    }).toList();
+
+    emit(state.copyWith(todos: todos));
   }
 }

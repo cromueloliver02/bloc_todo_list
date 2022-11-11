@@ -4,15 +4,21 @@ import '../../components/components.dart';
 import '../../pages/pages.dart';
 import '../../utils/functions.dart';
 
-class TabsPage extends StatelessWidget {
+class TabsPage extends StatefulWidget {
   static const id = '/tabs';
 
   const TabsPage({super.key});
 
+  @override
+  State<TabsPage> createState() => _TabsPageState();
+}
+
+class _TabsPageState extends State<TabsPage> {
   final _screens = const [
     HomePage(),
     FavoritesPage(),
   ];
+  var _currentIdx = 0;
 
   @override
   Widget build(BuildContext context) {
@@ -27,10 +33,13 @@ class TabsPage extends StatelessWidget {
             child: const Icon(Icons.add),
           ),
           body: IndexedStack(
-            index: 0,
+            index: _currentIdx,
             children: _screens,
           ),
-          bottomNavigationBar: const TDLBottomNavBar(),
+          bottomNavigationBar: TDLBottomNavBar(
+            currentIdx: _currentIdx,
+            onPressed: (idx) => setState(() => _currentIdx = idx),
+          ),
         ),
       ),
     );

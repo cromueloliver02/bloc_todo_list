@@ -12,14 +12,25 @@ class TodoListApp extends StatelessWidget {
     return MultiBlocProvider(
       providers: [
         BlocProvider(create: (ctx) => TodoListBloc()),
+        BlocProvider(
+          create: (ctx) => FavoriteTodosBloc(
+            todoListBloc: ctx.read<TodoListBloc>(),
+            initialFavoriteTodos: ctx
+                .read<TodoListBloc>()
+                .state
+                .todos
+                .where((d) => d.isFavorite)
+                .toList(),
+          ),
+        ),
       ],
       child: MaterialApp(
         title: 'Todo List',
         debugShowCheckedModeBanner: false,
         theme: lightTheme,
         darkTheme: darkTheme,
-        // themeMode: ThemeMode.light,
-        themeMode: ThemeMode.dark,
+        themeMode: ThemeMode.light,
+        // themeMode: ThemeMode.dark,
         initialRoute: TabsPage.id,
         routes: {
           TabsPage.id: (ctx) => const TabsPage(),

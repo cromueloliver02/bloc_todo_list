@@ -76,3 +76,14 @@ class RestoreTodoEvent extends TodoListEvent {
   @override
   List<Object> get props => [id];
 }
+
+class ToggleFavoriteTodoEvent extends TodoListEvent {
+  final String id;
+
+  const ToggleFavoriteTodoEvent({
+    required this.id,
+  });
+
+  @override
+  List<Object> get props => [id];
+}

@@ -47,9 +47,23 @@ class TDLTodoTile extends StatelessWidget {
     return Container(
       margin: const EdgeInsets.symmetric(vertical: 5),
       child: ListTile(
-        leading: Checkbox(
-          value: todo.isDone,
-          onChanged: (value) {},
+        leading: Row(
+          mainAxisSize: MainAxisSize.min,
+          children: [
+            Checkbox(
+              value: todo.isDone,
+              onChanged: (value) {},
+            ),
+            GestureDetector(
+              onTap: () => context
+                  .read<TodoListBloc>()
+                  .add(ToggleFavoriteTodoEvent(id: todo.id)),
+              child: Icon(
+                todo.isFavorite ? Icons.favorite : Icons.favorite_border,
+                color: Colors.red,
+              ),
+            ),
+          ],
         ),
         title: Text(
           todo.title,

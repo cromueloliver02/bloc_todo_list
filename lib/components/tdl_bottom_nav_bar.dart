@@ -2,7 +2,14 @@ import 'package:flutter/material.dart';
 import '../utils/constants.dart';
 
 class TDLBottomNavBar extends StatelessWidget {
-  const TDLBottomNavBar({super.key});
+  const TDLBottomNavBar({
+    super.key,
+    required this.currentIdx,
+    required this.onPressed,
+  });
+
+  final int currentIdx;
+  final void Function(int) onPressed;
 
   @override
   Widget build(BuildContext context) {
@@ -20,16 +27,20 @@ class TDLBottomNavBar extends StatelessWidget {
       ),
       child: Row(
         mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-        children: const [
+        children: [
           _BottomNavButton(
             label: 'Home',
             iconData: Icons.home,
-            isSelected: true,
+            index: 0,
+            currentIdx: currentIdx,
+            onPressed: onPressed,
           ),
           _BottomNavButton(
             label: 'Favorites',
             iconData: Icons.favorite,
-            isSelected: false,
+            index: 1,
+            currentIdx: currentIdx,
+            onPressed: onPressed,
           ),
         ],
       ),
@@ -42,33 +53,40 @@ class _BottomNavButton extends StatelessWidget {
     Key? key,
     required this.label,
     required this.iconData,
-    required this.isSelected,
+    required this.index,
+    required this.currentIdx,
+    required this.onPressed,
   }) : super(key: key);
 
   final String label;
   final IconData iconData;
-  final bool isSelected;
+  final int index;
+  final int currentIdx;
+  final void Function(int) onPressed;
 
   @override
   Widget build(BuildContext context) {
     final theme = Theme.of(context);
 
-    return Row(
-      children: [
-        Icon(
-          iconData,
-          size: 30,
-          color: isSelected ? kLightPrimaryColor : Colors.grey,
-        ),
-        const SizedBox(width: 5),
-        Text(
-          label,
-          style: theme.textTheme.bodyText1!.copyWith(
-            fontSize: kRegularFontSize,
-            color: isSelected ? kLightPrimaryColor : Colors.grey,
+    return GestureDetector(
+      onTap: () => onPressed(index),
+      child: Row(
+        children: [
+          Icon(
+            iconData,
+            size: 30,
+            color: index == currentIdx ? kLightPrimaryColor : Colors.grey,
           ),
-        ),
-      ],
+          const SizedBox(width: 5),
+          Text(
+            label,
+            style: theme.textTheme.bodyText1!.copyWith(
+              fontSize: kRegularFontSize,
+              color: index == currentIdx ? kLightPrimaryColor : Colors.grey,
+            ),
+          ),
+        ],
+      ),
     );
   }
 }
