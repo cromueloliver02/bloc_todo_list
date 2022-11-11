@@ -40,6 +40,12 @@ class TDLTodoTile extends StatelessWidget {
     }
   }
 
+  void _toggleDone(BuildContext ctx) =>
+      ctx.read<TodoListBloc>().add(ToggleDoneTodoEvent(id: todo.id));
+
+  void _toggleFavorite(BuildContext ctx) =>
+      ctx.read<TodoListBloc>().add(ToggleFavoriteTodoEvent(id: todo.id));
+
   @override
   Widget build(BuildContext context) {
     final theme = Theme.of(context);
@@ -52,13 +58,11 @@ class TDLTodoTile extends StatelessWidget {
           children: [
             Checkbox(
               value: todo.isDone,
-              onChanged: (value) {},
+              onChanged: (value) => _toggleDone(context),
             ),
             if (!todo.isArchived)
               GestureDetector(
-                onTap: () => context
-                    .read<TodoListBloc>()
-                    .add(ToggleFavoriteTodoEvent(id: todo.id)),
+                onTap: () => _toggleFavorite(context),
                 child: Icon(
                   todo.isFavorite ? Icons.favorite : Icons.favorite_border,
                   color: Colors.red,
