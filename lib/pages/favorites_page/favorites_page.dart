@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import '../../blocs/blocs.dart';
-import '../../models/todo.dart';
 import '../../components/components.dart';
 
 class FavoritesPage extends StatelessWidget {
@@ -13,18 +12,10 @@ class FavoritesPage extends StatelessWidget {
     return CustomScrollView(slivers: [
       const TDLSliverAppBar(title: 'Favorites'),
       SliverPadding(
-        padding: const EdgeInsets.symmetric(horizontal: 10),
-        sliver: BlocSelector<FavoriteTodosBloc, FavoriteTodosState, List<Todo>>(
-          selector: (state) => state.favoriteTodos,
-          builder: (context, favoriteTodos) => SliverList(
-            delegate: SliverChildBuilderDelegate(
-              childCount: favoriteTodos.length,
-              (ctx, idx) {
-                final favoriteTodo = favoriteTodos[idx];
-
-                return TDLTodoTile(todo: favoriteTodo);
-              },
-            ),
+        padding: const EdgeInsets.fromLTRB(10, 15, 10, 0),
+        sliver: SliverToBoxAdapter(
+          child: BlocBuilder<FavoriteTodosBloc, FavoriteTodosState>(
+            builder: (ctx, state) => TodoList(todos: state.favoriteTodos),
           ),
         ),
       ),

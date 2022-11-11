@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import '../../blocs/blocs.dart';
-import '../../models/todo.dart';
 import '../../components/components.dart';
 import './components/top_action_bar.dart';
 import '../../utils/utils.dart';
@@ -30,17 +29,9 @@ class HomePage extends StatelessWidget {
       ),
       SliverPadding(
         padding: const EdgeInsets.symmetric(horizontal: 10),
-        sliver: BlocSelector<FilteredTodosBloc, FilteredTodosState, List<Todo>>(
-          selector: (state) => state.filteredTodos,
-          builder: (ctx, filteredTodos) => SliverList(
-            delegate: SliverChildBuilderDelegate(
-              childCount: filteredTodos.length,
-              (ctx, idx) {
-                final todo = filteredTodos[idx];
-
-                return TDLTodoTile(todo: todo);
-              },
-            ),
+        sliver: SliverToBoxAdapter(
+          child: BlocBuilder<FilteredTodosBloc, FilteredTodosState>(
+            builder: (ctx, state) => TodoList(todos: state.filteredTodos),
           ),
         ),
       ),
