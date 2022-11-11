@@ -15,6 +15,9 @@ class TabsPage extends StatelessWidget {
     FavoritesPage(),
   ];
 
+  void _onPressed(BuildContext ctx, int idx) =>
+      ctx.read<TabBloc>().add(ChangeTabEvent(index: idx));
+
   @override
   Widget build(BuildContext context) {
     return KeyboardDismisser(
@@ -25,18 +28,19 @@ class TabsPage extends StatelessWidget {
           selector: (state) => state.index,
           builder: (ctx, index) => Scaffold(
             drawer: const TDLDrawer(),
-            floatingActionButton: FloatingActionButton(
-              onPressed: () => showTodoModal(context),
-              child: const Icon(Icons.add),
-            ),
+            floatingActionButton: index == 0
+                ? FloatingActionButton(
+                    onPressed: () => showTodoModal(context),
+                    child: const Icon(Icons.add),
+                  )
+                : null,
             body: IndexedStack(
               index: index,
               children: _screens,
             ),
             bottomNavigationBar: TDLBottomNavBar(
               currentTab: index,
-              onPressed: (idx) =>
-                  ctx.read<TabBloc>().add(ChangeTabEvent(index: idx)),
+              onPressed: (idx) => _onPressed(context, idx),
             ),
           ),
         ),
