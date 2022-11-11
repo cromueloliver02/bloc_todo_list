@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import '../utils/constants.dart';
+import '../utils/utils.dart';
 
 class TDLBottomNavBar extends StatelessWidget {
   const TDLBottomNavBar({

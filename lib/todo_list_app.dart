@@ -1,10 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_bloc/flutter_bloc.dart';
+import './blocs/blocs.dart';
 import './pages/pages.dart';
-import 'blocs/blocs.dart';
-import 'utils/blocs_handler.dart';
-import './utils/routes_handler.dart';
-import './utils/themes_handler.dart';
+import './utils/utils.dart';
 
 class TodoListApp extends StatelessWidget {
   TodoListApp({super.key});

@@ -1,7 +1,5 @@
 import 'dart:async';
 
-// ignore: depend_on_referenced_packages
-import 'package:bloc/bloc.dart';
 import 'package:equatable/equatable.dart';
 import '../blocs.dart';
 

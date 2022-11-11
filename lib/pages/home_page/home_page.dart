@@ -1,10 +1,9 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_bloc/flutter_bloc.dart';
 import '../../blocs/blocs.dart';
-import '../../components/components.dart';
 import '../../models/todo.dart';
+import '../../components/components.dart';
 import './components/top_action_bar.dart';
-import '../../utils/functions.dart';
+import '../../utils/utils.dart';
 
 class HomePage extends StatelessWidget {
   static const id = '/';

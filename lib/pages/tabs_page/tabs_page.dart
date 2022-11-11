@@ -1,10 +1,9 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:keyboard_dismisser/keyboard_dismisser.dart';
 import '../../blocs/blocs.dart';
 import '../../components/components.dart';
 import '../../pages/pages.dart';
-import '../../utils/functions.dart';
+import '../../utils/utils.dart';
 
 class TabsPage extends StatelessWidget {
   static const id = '/tabs';
