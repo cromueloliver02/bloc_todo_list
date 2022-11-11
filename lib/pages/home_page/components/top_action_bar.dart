@@ -10,8 +10,6 @@ class TopActionBar extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final filterButtons = ['All', 'Pending', 'Done'];
-
     return Column(
       children: [
         const SizedBox(height: 10),
@@ -33,9 +31,9 @@ class TopActionBar extends StatelessWidget {
           builder: (ctx, filter) => Row(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: List.generate(
-              filterButtons.length,
+              Filter.values.length,
               (idx) => FilterButton(
-                title: filterButtons[idx],
+                title: Filter.values[idx].name.toUpperCase(),
                 filter: Filter.values[idx],
                 isCurrent: Filter.values[idx] == filter,
                 onPressed: (filter) => _onPressed(ctx, filter),
