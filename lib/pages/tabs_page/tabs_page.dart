@@ -1,24 +1,20 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:keyboard_dismisser/keyboard_dismisser.dart';
+import '../../blocs/blocs.dart';
 import '../../components/components.dart';
 import '../../pages/pages.dart';
 import '../../utils/functions.dart';
 
-class TabsPage extends StatefulWidget {
+class TabsPage extends StatelessWidget {
   static const id = '/tabs';
 
   const TabsPage({super.key});
 
-  @override
-  State<TabsPage> createState() => _TabsPageState();
-}
-
-class _TabsPageState extends State<TabsPage> {
   final _screens = const [
     HomePage(),
     FavoritesPage(),
   ];
-  var _currentIdx = 0;
 
   @override
   Widget build(BuildContext context) {
@@ -26,19 +22,23 @@ class _TabsPageState extends State<TabsPage> {
       gestures: const [GestureType.onTap],
       child: SafeArea(
         top: false,
-        child: Scaffold(
-          drawer: const TDLDrawer(),
-          floatingActionButton: FloatingActionButton(
-            onPressed: () => showTodoModal(context),
-            child: const Icon(Icons.add),
-          ),
-          body: IndexedStack(
-            index: _currentIdx,
-            children: _screens,
-          ),
-          bottomNavigationBar: TDLBottomNavBar(
-            currentIdx: _currentIdx,
-            onPressed: (idx) => setState(() => _currentIdx = idx),
+        child: BlocSelector<TabBloc, TabState, int>(
+          selector: (state) => state.index,
+          builder: (ctx, index) => Scaffold(
+            drawer: const TDLDrawer(),
+            floatingActionButton: FloatingActionButton(
+              onPressed: () => showTodoModal(context),
+              child: const Icon(Icons.add),
+            ),
+            body: IndexedStack(
+              index: index,
+              children: _screens,
+            ),
+            bottomNavigationBar: TDLBottomNavBar(
+              currentTab: index,
+              onPressed: (idx) =>
+                  ctx.read<TabBloc>().add(ChangeTabEvent(index: idx)),
+            ),
           ),
         ),
       ),

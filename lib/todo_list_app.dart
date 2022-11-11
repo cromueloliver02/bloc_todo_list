@@ -25,6 +25,7 @@ class TodoListApp extends StatelessWidget {
         ),
         BlocProvider(create: (ctx) => TodoSearchBloc()),
         BlocProvider(create: (ctx) => TodoFilterBloc()),
+        BlocProvider(create: (ctx) => TabBloc()),
         BlocProvider(
           create: (ctx) => FilteredTodosBloc(
             todoFilterBloc: ctx.read<TodoFilterBloc>(),
