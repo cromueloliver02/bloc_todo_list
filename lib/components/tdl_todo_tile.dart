@@ -51,31 +51,41 @@ class TDLTodoTile extends StatelessWidget {
     return Container(
       margin: const EdgeInsets.symmetric(vertical: 5),
       child: ListTile(
-        leading: Row(
-          mainAxisSize: MainAxisSize.min,
-          children: [
-            Checkbox(
-              value: todo.isDone,
-              onChanged: (value) => _toggleDone(context),
-            ),
-            if (!todo.isArchived)
-              GestureDetector(
-                onTap: () => _toggleFavorite(context),
-                child: Icon(
-                  todo.isFavorite ? Icons.favorite : Icons.favorite_border,
-                  color: Colors.red,
+        leading: !todo.isArchived
+            ? Row(
+                mainAxisSize: MainAxisSize.min,
+                children: [
+                  Checkbox(
+                    value: todo.isDone,
+                    onChanged: (value) => _toggleDone(context),
+                  ),
+                  GestureDetector(
+                    onTap: () => _toggleFavorite(context),
+                    child: Icon(
+                      todo.isFavorite ? Icons.favorite : Icons.favorite_border,
+                      color: Colors.red,
+                    ),
+                  ),
+                ],
+              )
+            : Text(
+                todo.title,
+                overflow: TextOverflow.ellipsis,
+                style: theme.textTheme.bodyText1!.copyWith(
+                  fontSize: kRegularFontSize,
+                  fontWeight: FontWeight.normal,
                 ),
               ),
-          ],
-        ),
-        title: Text(
-          todo.title,
-          overflow: TextOverflow.ellipsis,
-          style: theme.textTheme.bodyText1!.copyWith(
-            fontSize: kRegularFontSize,
-            fontWeight: FontWeight.normal,
-          ),
-        ),
+        title: !todo.isArchived
+            ? Text(
+                todo.title,
+                overflow: TextOverflow.ellipsis,
+                style: theme.textTheme.bodyText1!.copyWith(
+                  fontSize: kRegularFontSize,
+                  fontWeight: FontWeight.normal,
+                ),
+              )
+            : null,
         trailing: PopupMenuButton<PopButtonType>(
           onSelected: (type) => _onSelected(context, type),
           itemBuilder: (ctx) => [
