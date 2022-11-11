@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:intl/intl.dart';
 import '../models/todo.dart';
 import './components.dart';
 import '../utils/utils.dart';
@@ -20,6 +21,7 @@ class TDLTodoList extends StatelessWidget {
         todos.length,
         (idx) {
           final todo = todos[idx];
+          final dateTime = DateFormat.jm().add_yMMMd().format(todo.dateTime);
 
           return ExpansionPanelRadio(
             value: todo.id,
@@ -37,7 +39,7 @@ class TDLTodoList extends StatelessWidget {
                 ),
                 subtitle: Padding(
                   padding: const EdgeInsets.only(top: 15),
-                  child: Text(DateTime.now().toString()),
+                  child: Text(dateTime),
                 ),
               ),
             ),

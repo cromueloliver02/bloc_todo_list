@@ -22,6 +22,7 @@ class TodoListBloc extends HydratedBloc<TodoListEvent, TodoListState> {
       id: uuid.v4(),
       title: event.title,
       description: event.desc,
+      dateTime: DateTime.now(),
     );
     final todos = [todo, ...state.todos];
 
