@@ -1,20 +1,50 @@
 import 'package:flutter/material.dart';
+import 'package:lottie/lottie.dart';
 import 'package:intl/intl.dart';
+
 import '../models/todo.dart';
-import './components.dart';
 import '../utils/utils.dart';
+import './components.dart';
 
 class TDLTodoList extends StatelessWidget {
   const TDLTodoList({
     Key? key,
     required this.todos,
+    required this.emptyMessage,
+    this.emptyAnimation =
+        'https://assets10.lottiefiles.com/packages/lf20_iikbn1ww.json',
   }) : super(key: key);
 
   final List<Todo> todos;
+  final String emptyMessage;
+  final String emptyAnimation;
 
   @override
   Widget build(BuildContext context) {
     final theme = Theme.of(context);
+
+    if (todos.isEmpty) {
+      return Padding(
+        padding: const EdgeInsets.only(top: 100),
+        child: Column(
+          children: [
+            SizedBox(
+              width: 300,
+              child: Text(
+                emptyMessage,
+                textAlign: TextAlign.center,
+                style: theme.textTheme.titleLarge,
+              ),
+            ),
+            const SizedBox(height: 10),
+            Lottie.network(
+              emptyAnimation,
+              height: 300,
+            ),
+          ],
+        ),
+      );
+    }
 
     return ExpansionPanelList.radio(
       children: List.generate(

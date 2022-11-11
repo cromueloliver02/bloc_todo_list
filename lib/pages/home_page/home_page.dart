@@ -31,7 +31,12 @@ class HomePage extends StatelessWidget {
         padding: const EdgeInsets.symmetric(horizontal: 10),
         sliver: SliverToBoxAdapter(
           child: BlocBuilder<FilteredTodosBloc, FilteredTodosState>(
-            builder: (ctx, state) => TDLTodoList(todos: state.filteredTodos),
+            builder: (ctx, state) => TDLTodoList(
+              todos: state.filteredTodos,
+              emptyMessage: 'What is your main focus today?',
+              emptyAnimation:
+                  'https://assets2.lottiefiles.com/packages/lf20_ZcIjtY.json',
+            ),
           ),
         ),
       ),

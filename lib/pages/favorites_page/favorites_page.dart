@@ -15,7 +15,12 @@ class FavoritesPage extends StatelessWidget {
         padding: const EdgeInsets.fromLTRB(10, 15, 10, 0),
         sliver: SliverToBoxAdapter(
           child: BlocBuilder<FavoriteTodosBloc, FavoriteTodosState>(
-            builder: (ctx, state) => TDLTodoList(todos: state.favoriteTodos),
+            builder: (ctx, state) => TDLTodoList(
+              todos: state.favoriteTodos,
+              emptyMessage: 'No favorite tasks yet',
+              emptyAnimation:
+                  'https://assets1.lottiefiles.com/private_files/lf30_e3pteeho.json',
+            ),
           ),
         ),
       ),
