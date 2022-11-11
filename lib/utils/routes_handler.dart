@@ -7,5 +7,6 @@ class RoutesHandler {
     HomePage.id: (ctx) => const HomePage(),
     FavoritesPage.id: (ctx) => const FavoritesPage(),
     ArchivePage.id: (ctx) => const ArchivePage(),
+    AboutPage.id: (ctx) => const AboutPage(),
   };
 }

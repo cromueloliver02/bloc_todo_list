@@ -109,6 +109,22 @@ class TDLDrawer extends StatelessWidget {
                 ArchivePage.id,
               ),
             ),
+            ListTile(
+              leading: const Icon(
+                Icons.phone_android,
+                size: 30,
+              ),
+              title: Text(
+                'About',
+                style: theme.textTheme.bodyText1!.copyWith(
+                  fontSize: kRegularFontSize,
+                ),
+              ),
+              onTap: () => Navigator.pushReplacementNamed(
+                context,
+                AboutPage.id,
+              ),
+            ),
             const SizedBox(height: 20),
             Padding(
               padding: const EdgeInsets.symmetric(horizontal: 20),

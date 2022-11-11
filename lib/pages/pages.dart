@@ -1,3 +1,4 @@
+export 'about_page/about_page.dart';
 export 'archive_page/archive_page.dart';
 export 'favorites_page/favorites_page.dart';
 export 'home_page/home_page.dart';
