@@ -5,12 +5,14 @@ class FilterButton extends StatelessWidget {
   const FilterButton({
     Key? key,
     required this.title,
+    required this.count,
     required this.isCurrent,
     required this.filter,
     required this.onPressed,
   }) : super(key: key);
 
   final String title;
+  final int count;
   final Filter filter;
   final bool isCurrent;
   final void Function(Filter) onPressed;
@@ -21,12 +23,28 @@ class FilterButton extends StatelessWidget {
 
     return TextButton(
       onPressed: () => onPressed(filter),
-      child: Text(
-        title,
-        style: theme.textTheme.titleMedium!.copyWith(
-          fontWeight: FontWeight.w600,
-          color: isCurrent ? theme.primaryColorLight : Colors.grey,
-        ),
+      style: TextButton.styleFrom(
+        padding: const EdgeInsets.symmetric(horizontal: 10),
+      ),
+      child: Row(
+        mainAxisSize: MainAxisSize.min,
+        children: [
+          Text(
+            title,
+            style: theme.textTheme.titleMedium!.copyWith(
+              fontWeight: FontWeight.w600,
+              color: isCurrent ? theme.primaryColorLight : Colors.grey,
+            ),
+          ),
+          const SizedBox(width: 5),
+          Text(
+            '($count)',
+            style: theme.textTheme.titleMedium!.copyWith(
+              fontWeight: FontWeight.w600,
+              color: isCurrent ? theme.primaryColorLight : Colors.grey,
+            ),
+          ),
+        ],
       ),
     );
   }

@@ -18,6 +18,16 @@ class BlocsHandler {
             .toList(),
       ),
     ),
+    BlocProvider<TodoCountBloc>(
+      create: (ctx) => TodoCountBloc(
+        todoListBloc: ctx.read<TodoListBloc>(),
+        initialAllCount: ctx.read<TodoListBloc>().state.todos.length,
+        initialPendingCount:
+            ctx.read<TodoListBloc>().state.todos.where((d) => !d.isDone).length,
+        initialDoneCount:
+            ctx.read<TodoListBloc>().state.todos.where((d) => d.isDone).length,
+      ),
+    ),
     BlocProvider<FilteredTodosBloc>(
       create: (ctx) => FilteredTodosBloc(
         todoFilterBloc: ctx.read<TodoFilterBloc>(),

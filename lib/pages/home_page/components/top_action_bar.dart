@@ -51,16 +51,30 @@ class _TopActionBarState extends State<TopActionBar> {
         BlocSelector<TodoFilterBloc, TodoFilterState, Filter>(
           selector: (state) => state.filter,
           builder: (ctx, filter) => Row(
-            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-            children: List.generate(
-              Filter.values.length,
-              (idx) => FilterButton(
-                title: Filter.values[idx].name.toUpperCase(),
-                filter: Filter.values[idx],
-                isCurrent: Filter.values[idx] == filter,
+            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+            children: [
+              FilterButton(
+                title: Filter.all.name.toUpperCase(),
+                count: ctx.watch<TodoCountBloc>().state.allCount,
+                filter: Filter.all,
+                isCurrent: filter == Filter.all,
                 onPressed: (filter) => _onFilter(ctx, filter),
               ),
-            ),
+              FilterButton(
+                title: Filter.pending.name.toUpperCase(),
+                count: ctx.watch<TodoCountBloc>().state.pendingCount,
+                filter: Filter.pending,
+                isCurrent: filter == Filter.pending,
+                onPressed: (filter) => _onFilter(ctx, filter),
+              ),
+              FilterButton(
+                title: Filter.done.name.toUpperCase(),
+                count: ctx.watch<TodoCountBloc>().state.doneCount,
+                filter: Filter.done,
+                isCurrent: filter == Filter.done,
+                onPressed: (filter) => _onFilter(ctx, filter),
+              ),
+            ],
           ),
         ),
         const SizedBox(height: 10),
