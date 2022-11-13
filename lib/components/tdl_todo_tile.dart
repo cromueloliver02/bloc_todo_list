@@ -1,15 +1,18 @@
 import 'package:flutter/material.dart';
+
 import '../blocs/blocs.dart';
 import '../models/todo.dart';
 import '../utils/utils.dart';
 
 class TDLTodoTile extends StatelessWidget {
   const TDLTodoTile({
-    super.key,
+    Key? key,
     required this.todo,
-  });
+    this.hideCheckbox = false,
+  }) : super(key: key);
 
   final Todo todo;
+  final bool hideCheckbox;
 
   void _onSelected(BuildContext ctx, PopButtonType type) async {
     final todoListBloc = ctx.read<TodoListBloc>();
@@ -55,10 +58,11 @@ class TDLTodoTile extends StatelessWidget {
             ? Row(
                 mainAxisSize: MainAxisSize.min,
                 children: [
-                  Checkbox(
-                    value: todo.isDone,
-                    onChanged: (value) => _toggleDone(context),
-                  ),
+                  if (!hideCheckbox)
+                    Checkbox(
+                      value: todo.isDone,
+                      onChanged: (value) => _toggleDone(context),
+                    ),
                   GestureDetector(
                     onTap: () => _toggleFavorite(context),
                     child: Icon(

@@ -11,12 +11,14 @@ class TDLTodoList extends StatelessWidget {
     Key? key,
     required this.todos,
     required this.emptyMessage,
+    this.hideCheckbox = false,
     this.emptyAnimation =
         'https://assets10.lottiefiles.com/packages/lf20_iikbn1ww.json',
   }) : super(key: key);
 
   final List<Todo> todos;
   final String emptyMessage;
+  final bool hideCheckbox;
   final String emptyAnimation;
 
   @override
@@ -56,7 +58,10 @@ class TDLTodoList extends StatelessWidget {
           return ExpansionPanelRadio(
             value: todo.id,
             canTapOnHeader: true,
-            headerBuilder: (ctx, isOpen) => TDLTodoTile(todo: todo),
+            headerBuilder: (ctx, isOpen) => TDLTodoTile(
+              todo: todo,
+              hideCheckbox: hideCheckbox,
+            ),
             body: Padding(
               padding: const EdgeInsets.only(bottom: 10),
               child: ListTile(

@@ -17,6 +17,7 @@ class FavoritesPage extends StatelessWidget {
           child: BlocBuilder<FavoriteTodosBloc, FavoriteTodosState>(
             builder: (ctx, state) => TDLTodoList(
               todos: state.favoriteTodos,
+              hideCheckbox: true,
               emptyMessage: 'No favorite tasks yet',
               emptyAnimation:
                   'https://assets1.lottiefiles.com/private_files/lf30_e3pteeho.json',
